@@ -110,23 +110,25 @@ public class XandOGame {
 	}
 
 	public boolean isGameOver() {
+		if(!this.isWinnerO() && !this.isWinnerX()) {
 		for (int i = 0; i < table.size(); i++) {
-			if (!table.get(i).equals("x") || !table.get(i).equals("0")) {
+			if (table.get(i).equals(" ")) {
 				return false;
 			}
+		}
 		}
 		return true;
 	}
 
-	public boolean isFieldFree() {
-		for (int i = 0; i < table.size(); i++) {
-			if (table.get(i).equals(" ")) {
-				return true;
-			}
+	public boolean isFieldFree(int pozicija) {
+		if (table.get(pozicija).equals(" ")) {
+			return true;
 		}
+		System.out.println("Ovo polje je popunjeno. Pokusajte ponovo");
 		return false;
 	}
-
+//	Metodu playNext, metoda prebacuje potez na sledeceg igraca, 
+//	ako je bio igrac x prebacuje ga na o i obrnuto
 	public void playNext() {
 		if (this.nextPlayer.equals("x")) {
 			this.nextPlayer = "0";
@@ -149,9 +151,13 @@ public class XandOGame {
 //	x |   |   |
 
 	public void makeAMove(int pozicija) {
-		if (this.isFieldFree() == true) {
-			this.table.set(pozicija, nextPlayer);
+		if (this.isValidMove(pozicija)) {
+			if (this.isFieldFree(pozicija)) {
+				this.table.set(pozicija, nextPlayer);
+				this.playNext();
+			}
 		}
+		
 	}
 
 //	Metodu isWinnerX - metoda vraca rezultat igre za igraca X. 
@@ -195,14 +201,15 @@ public class XandOGame {
 //	Ukoliko nemam pobednika vracamo 0
 
 	public boolean isValidMove(int pozicija) {
-		if (pozicija < 0 || pozicija > table.size()) {
+		if (pozicija < 0 || pozicija > table.size()-1) {
+			System.out.println("Ova pozicija nije u opsegu dozvoljenih. Pokusajte ponovo.");
 			return false;
 		}
 		return true;
 	}
 
 	public int gameScore() {
-		if (this.isWinnerX() == true) {
+		if (this.isWinnerX()) {
 			return 1;
 		} else if (this.isWinnerO()) {
 			return 2;

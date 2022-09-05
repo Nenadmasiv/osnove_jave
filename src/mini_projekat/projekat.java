@@ -79,12 +79,10 @@ public class projekat {
 		game.startGame();
 //		game.playNext();
 
-		while (game.isGameOver() == false || game.isWinnerO() == true || game.isWinnerX() == true) {
+		while (!game.isGameOver()) {
 			System.out.println("Unesite poziciju od 0 do 8 za polje koje zelite da odigrate: ");
 			int pozicija = s.nextInt();
-			if (game.isValidMove(pozicija) == false) {
-				System.out.println("Pozicija nije u opsegu dozvoljenog. Pokusajte ponovo: ");
-			} else if (game.isValidMove(pozicija) == false) {
+				if (game.isValidMove(pozicija) == false) {
 				System.out.println("Ovo polje je popunjeno. Pokusajte ponovo: ");
 			}
 			game.makeAMove(pozicija);
@@ -93,9 +91,10 @@ public class projekat {
 		
 		game.gameScore();
 		if (game.gameScore() == 1) {
-			System.out.println("Pobednik je " + game.getPlayerX());
+			System.out.print("Pobednik je: ");
+			 game.getPlayerX().print();
 		}else if (game.gameScore() == 2) {
-			System.out.println("Pobednik je " + game.getPlayerY());
+			System.out.println("Pobednik je: " + game.getPlayerY().getPunoIme());
 		}else {
 			System.out.println("Nereseno!");
 		}
